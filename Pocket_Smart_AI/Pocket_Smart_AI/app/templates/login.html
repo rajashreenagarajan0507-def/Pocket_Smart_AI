@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PocketSmart - Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f8ff;
+            color: #172554;
+            min-height: 100vh;
+        }
+
+        nav {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .logo span {
+            color: #172554;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .home-link:hover {
+            color: #2563eb;
+        }
+
+        .login-wrapper {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(37,99,235,0.12);
+        }
+
+        .login-icon {
+            width: 65px;
+            height: 65px;
+            background: #eff6ff;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 22px;
+        }
+
+        .login-card h1 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dbe3ef;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .login-button:hover {
+            background: #1d4ed8;
+        }
+
+        .register-text {
+            text-align: center;
+            margin-top: 25px;
+            color: #64748b;
+        }
+
+        .register-text a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 500px) {
+            .login-card {
+                padding: 28px 22px;
+            }
+
+            .login-card h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <a href="/" class="logo">
+        Pocket<span>Smart</span>
+    </a>
+
+    <a href="/" class="home-link">
+        ← Back to Home
+    </a>
+
+</nav>
+
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <div class="login-icon">
+            🔐
+        </div>
+
+        <h1>
+            Welcome Back
+        </h1>
+
+        <p class="subtitle">
+            Sign in to continue using PocketSmart
+            and manage your budget plans.
+        </p>
+
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+
+        <form method="POST" action="/login">
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username or Email
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username or email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Login
+            </button>
+
+        </form>
+
+
+        <p class="register-text">
+            Don't have an account?
+            <a href="/register">
+                Create an account
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

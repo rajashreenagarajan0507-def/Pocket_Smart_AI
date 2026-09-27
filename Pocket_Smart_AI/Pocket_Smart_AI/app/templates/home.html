@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PocketSmart - Home Budget Planner</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f8ff;
+            color: #172554;
+        }
+
+        nav {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .logo span {
+            color: #172554;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .login-btn {
+            background: #2563eb;
+            color: white !important;
+            padding: 11px 22px;
+            border-radius: 8px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 50px auto;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .heading h1 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .heading p {
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        .card {
+            background: white;
+            padding: 38px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(37,99,235,0.10);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 9px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dbe3ef;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .section-title {
+            font-size: 21px;
+            margin: 10px 0 22px;
+            color: #1d4ed8;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .check-card {
+            border: 1px solid #dbe3ef;
+            border-radius: 10px;
+            padding: 16px;
+            cursor: pointer;
+        }
+
+        .check-card:hover {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .check-card input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .check-card label {
+            display: inline;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 28px;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 70px;
+            background: #172554;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer p {
+            color: #cbd5e1;
+        }
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 29px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <a href="/" class="logo">
+        Pocket<span>Smart</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/planners">Planners</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/history">History</a>
+        <a href="/login" class="login-btn">Login</a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <div class="heading">
+
+        <h1>Home Budget Planner</h1>
+
+        <p>
+            Plan your home interior and furniture
+            within your budget.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="info-box">
+            Tell us about your home requirements.
+            PocketSmart will create a budget-friendly
+            plan based on your selected requirements.
+        </div>
+
+
+        <form method="POST" action="/home">
+
+
+            <div class="form-group">
+
+                <label for="budget">
+                    Total Budget
+                </label>
+
+                <input
+                    type="number"
+                    id="budget"
+                    name="budget"
+                    placeholder="Example: 500000"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="rooms">
+                        Number of Rooms
+                    </label>
+
+                    <select
+                        id="rooms"
+                        name="rooms"
+                        required
+                    >
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="1">
+                            1 Room
+                        </option>
+
+                        <option value="2">
+                            2 Rooms
+                        </option>
+
+                        <option value="3">
+                            3 Rooms
+                        </option>
+
+                        <option value="4">
+                            4 Rooms
+                        </option>
+
+                        <option value="5+">
+                            5+ Rooms
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="home_type">
+                        Home Type
+                    </label>
+
+                    <select
+                        id="home_type"
+                        name="home_type"
+                    >
+
+                        <option value="">
+                            Select home type
+                        </option>
+
+                        <option value="Apartment">
+                            Apartment
+                        </option>
+
+                        <option value="Independent House">
+                            Independent House
+                        </option>
+
+                        <option value="Villa">
+                            Villa
+                        </option>
+
+                        <option value="Studio">
+                            Studio
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <h2 class="section-title">
+                What do you need?
+            </h2>
+
+
+            <div class="checkbox-grid">
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="sofa"
+                        name="requirements"
+                        value="Sofa"
+                    >
+
+                    <label for="sofa">
+                        Sofa
+                    </label>
+
+                </div>
+
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="bed"
+                        name="requirements"
+                        value="Bed"
+                    >
+
+                    <label for="bed">
+                        Bed
+                    </label>
+
+                </div>
+
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="dining"
+                        name="requirements"
+                        value="Dining Table"
+                    >
+
+                    <label for="dining">
+                        Dining Table
+                    </label>
+
+                </div>
+
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="wardrobe"
+                        name="requirements"
+                        value="Wardrobe"
+                    >
+
+                    <label for="wardrobe">
+                        Wardrobe
+                    </label>
+
+                </div>
+
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="lighting"
+                        name="requirements"
+                        value="Lighting"
+                    >
+
+                    <label for="lighting">
+                        Lighting
+                    </label>
+
+                </div>
+
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="curtains"
+                        name="requirements"
+                        value="Curtains"
+                    >
+
+                    <label for="curtains">
+                        Curtains
+                    </label>
+
+                </div>
+
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="tv"
+                        name="requirements"
+                        value="TV Unit"
+                    >
+
+                    <label for="tv">
+                        TV Unit
+                    </label>
+
+                </div>
+
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="decor"
+                        name="requirements"
+                        value="Home Decor"
+                    >
+
+                    <label for="decor">
+                        Home Decor
+                    </label>
+
+                </div>
+
+
+                <div class="check-card">
+
+                    <input
+                        type="checkbox"
+                        id="kitchen"
+                        name="requirements"
+                        value="Kitchen"
+                    >
+
+                    <label for="kitchen">
+                        Kitchen
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="additional">
+                    Additional Information
+                </label>
+
+                <textarea
+                    id="additional"
+                    name="additional"
+                    placeholder="Describe your home, preferred style, colours, special requirements, etc."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+                Generate Home Budget Plan
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 PocketSmart. AI-Powered Budget Planning.
+    </p>
+
+</footer>
+
+</body>
+</html>

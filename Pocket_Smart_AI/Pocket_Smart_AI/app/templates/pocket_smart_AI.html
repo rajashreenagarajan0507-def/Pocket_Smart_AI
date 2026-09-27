@@ -1,0 +1,330 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #1f4e79;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 8px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        select,
+        input,
+        textarea,
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 7px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 20px;
+            background: #1f4e79;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f0f6ff;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error {
+            color: #b00020;
+        }
+
+        .success {
+            color: #176b2c;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>💰 PocketSmart AI</h1>
+    <p>Your Smart Budget & Recommendation Assistant</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Create Your Budget Plan</h2>
+
+        <label for="username">Username</label>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Enter your username"
+        >
+
+        <label for="planner">Choose Planner</label>
+
+        <select id="planner">
+            <option value="home">Home</option>
+            <option value="party">Party</option>
+            <option value="jewelry">Jewelry</option>
+        </select>
+
+        <label for="budget">Budget (₹)</label>
+
+        <input
+            type="number"
+            id="budget"
+            placeholder="Enter your budget"
+            min="1"
+        >
+
+        <label for="description">What do you need?</label>
+
+        <textarea
+            id="description"
+            placeholder="Example: Living room decoration for a small room"
+        ></textarea>
+
+        <button 
+        onclick="generateRecommendation()">
+            Generate Recommendation
+        </button>
+
+        <button onclick="viewHistory()">
+            View My History
+        </button>
+
+        <div id="result" class="hidden"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function generateRecommendation() {
+
+    const username = document.getElementById("username").value.trim();
+    const planner = document.getElementById("planner").value;
+    const budget = document.getElementById("budget").value;
+    const description = document.getElementById("description").value.trim();
+
+    const result = document.getElementById("result");
+
+    if (!username) {
+        result.classList.remove("hidden");
+        result.innerHTML = "Please enter your username.";
+        return;
+    }
+
+    if (!budget || budget <= 0) {
+        result.classList.remove("hidden");
+        result.innerHTML = "Please enter a valid budget.";
+        return;
+    }
+
+    result.classList.remove("hidden");
+    result.innerHTML =
+        "🤖 PocketSmart AI is generating your recommendation...";
+
+    try {
+
+        const response = await fetch(
+            `/api/planners/${planner}`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    budget: Number(budget),
+                    description: description
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error("Something went wrong.");
+        }
+
+        result.innerHTML =
+            `<strong>Planner:</strong> ${data.planner}
+
+<strong>Budget:</strong> ₹${data.budget}
+
+<strong>Requirement:</strong> ${data.description}
+
+<strong>AI Recommendation:</strong>
+
+${data.recommendation}
+
+<div class="success">
+✅ Recommendation saved to your history.
+</div>`;
+
+        // Save recommendation to history
+        try {
+
+            const historyResponse = await fetch(
+                `/api/history/${encodeURIComponent(username)}` +
+                `?planner=${encodeURIComponent(data.planner)}` +
+                `&budget=${encodeURIComponent(data.budget)}` +
+                `&description=${encodeURIComponent(data.description)}` +
+                `&recommendation=${encodeURIComponent(data.recommendation)}`,
+                {
+                    method: "POST"
+                }
+            );
+
+            if (!historyResponse.ok) {
+                throw new Error("History could not be saved.");
+            }
+
+        } catch (historyError) {
+
+            result.innerHTML +=
+                `<div class="error">
+                ⚠️ Recommendation generated, but history could not be saved.
+                </div>`;
+        }
+
+    } catch (error) {
+
+        result.classList.remove("hidden");
+
+        result.innerHTML =
+            `<span class="error">
+            ❌ Unable to generate recommendation.
+            Please make sure the backend is running.
+            </span>`;
+    }
+}
+async function viewHistory() {
+
+    const username = document.getElementById("username").value.trim();
+    const result = document.getElementById("result");
+
+    if (!username) {
+        result.classList.remove("hidden");
+        result.innerHTML = "Please enter your username.";
+        return;
+    }
+
+    result.classList.remove("hidden");
+    result.innerHTML = "📖 Loading your history...";
+
+    try {
+
+        const response = await fetch(
+            `/api/history/${encodeURIComponent(username)}`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error("Unable to load history.");
+        }
+
+        if (data.history.length === 0) {
+
+            result.innerHTML =
+                "<strong>No history found.</strong>";
+
+            return;
+        }
+
+        let historyHTML = "<strong>📖 Your Recommendation History</strong><br><br>";
+
+        data.history.forEach((item, index) => {
+
+            historyHTML +=
+                `<strong>${index + 1}. ${item.planner}</strong><br>
+                Budget: ₹${item.budget}<br>
+                Requirement: ${item.description}<br>
+                Recommendation: ${item.recommendation}<br><br>`;
+        });
+
+        result.innerHTML = historyHTML;
+
+    } catch (error) {
+
+        result.innerHTML =
+            `<span class="error">
+            ❌ Unable to load history.
+            </span>`;
+    }
+}
+
+</script>
+
+</body>
+</html>

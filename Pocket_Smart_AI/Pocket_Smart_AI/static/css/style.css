@@ -1,0 +1,277 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eaf4ff;
+    color: #12304a;
+}
+
+/* Main container */
+
+.page-container {
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main cards */
+
+.welcome-card,
+.planner-page,
+.planner-form-card {
+    width: 100%;
+    max-width: 850px;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 86, 179, 0.15);
+    border: 1px solid #d6eaff;
+}
+
+.welcome-card {
+    max-width: 500px;
+    text-align: center;
+}
+
+/* Headings */
+
+h1 {
+    margin-top: 0;
+    color: #075aaa;
+    font-size: 32px;
+}
+
+h2 {
+    color: #075aaa;
+}
+
+.subtitle {
+    color: #52708c;
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+.welcome-text {
+    color: #52708c;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Forms */
+
+form {
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 7px;
+    color: #174b73;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #b9d9f5;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    background: #fafdff;
+    color: #12304a;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #1683d8;
+    box-shadow: 0 0 0 3px rgba(22, 131, 216, 0.12);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Buttons */
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #0878c9;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #0564aa;
+    transform: translateY(-1px);
+}
+
+/* Planner selection */
+
+.planner-page {
+    max-width: 1000px;
+    text-align: center;
+}
+
+.planner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.planner-card {
+    display: block;
+    padding: 30px 20px;
+    background: #f4faff;
+    border: 2px solid #c9e5fa;
+    border-radius: 18px;
+    text-decoration: none;
+    color: #12304a;
+    transition: 0.2s;
+}
+
+.planner-card:hover {
+    transform: translateY(-5px);
+    background: #e9f5ff;
+    border-color: #1683d8;
+    box-shadow: 0 8px 20px rgba(0, 100, 190, 0.15);
+}
+
+.planner-icon {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.planner-card h2 {
+    margin: 10px 0;
+    color: #075aaa;
+}
+
+.planner-card p {
+    color: #52708c;
+    line-height: 1.5;
+}
+
+/* Back link */
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #0878c9;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    color: #045b9a;
+}
+
+/* History */
+
+.history-button {
+    max-width: 250px;
+    margin: 30px auto 0;
+}
+
+.history-box {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.history-item {
+    padding: 20px;
+    margin-top: 15px;
+    background: #f4faff;
+    border-radius: 12px;
+    border-left: 5px solid #0878c9;
+}
+
+.history-item h4 {
+    margin-top: 0;
+    color: #075aaa;
+}
+
+/* Recommendation */
+
+.recommendation-box {
+    margin-top: 30px;
+    padding: 25px;
+    background: #f2f9ff;
+    border-radius: 15px;
+    text-align: left;
+    border-left: 5px solid #0878c9;
+}
+
+.recommendation-box h2 {
+    margin-top: 0;
+    color: #075aaa;
+}
+
+.recommendation-text {
+    margin-top: 20px;
+    line-height: 1.7;
+    color: #294d68;
+}
+
+/* Messages */
+
+.loading {
+    margin-top: 25px;
+    text-align: center;
+    color: #0878c9;
+    font-weight: bold;
+}
+
+.error-message {
+    margin-top: 25px;
+    padding: 15px;
+    background: #fff4f4;
+    color: #b00020;
+    border-radius: 10px;
+}
+
+.history-message {
+    margin-top: 25px;
+    color: #52708c;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .page-container {
+        padding: 20px 12px;
+    }
+
+    .welcome-card,
+    .planner-page,
+    .planner-form-card {
+        padding: 25px 20px;
+    }
+
+    .planner-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+}

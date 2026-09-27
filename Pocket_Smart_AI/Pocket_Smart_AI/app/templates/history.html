@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>History - PocketSmart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f9ff;
+            color: #172b4d;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 12px rgba(0, 60, 130, 0.08);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #0866d8;
+        }
+
+        .logo span {
+            color: #172b4d;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #344563;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #0866d8;
+        }
+
+        .logout {
+            background: #0866d8;
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        /* PAGE */
+
+        .page {
+            max-width: 1100px;
+            margin: auto;
+            padding: 50px 25px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #718096;
+        }
+
+        /* HISTORY CARD */
+
+        .history-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 70, 140, 0.08);
+            overflow: hidden;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 25px;
+            border-bottom: 1px solid #edf1f6;
+            gap: 20px;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .history-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 13px;
+            background: #e7f2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .history-info h3 {
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+
+        .history-info p {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .history-right {
+            text-align: right;
+        }
+
+        .amount {
+            font-size: 17px;
+            font-weight: bold;
+            color: #0866d8;
+            margin-bottom: 5px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #8a98aa;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 7px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #e9f8ef;
+            color: #168447;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #718096;
+            margin-bottom: 25px;
+        }
+
+        .planner-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #0866d8;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a:not(.logout) {
+                display: none;
+            }
+
+            .page {
+                padding: 35px 15px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .history-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .history-right {
+                text-align: left;
+                padding-left: 68px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            Pocket<span>Smart</span>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('planners') }}">
+                Planners
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- CONTENT -->
+
+    <main class="page">
+
+        <div class="page-header">
+
+            <h1>
+                Budget History
+            </h1>
+
+            <p>
+                View your previous budget planning activities.
+            </p>
+
+        </div>
+
+
+        <div class="history-card">
+
+            <!-- HOME -->
+
+            <div class="history-item">
+
+                <div class="history-left">
+
+                    <div class="history-icon">
+                        🏠
+                    </div>
+
+                    <div class="history-info">
+
+                        <h3>
+                            Home Budget Planner
+                        </h3>
+
+                        <p>
+                            Home furnishing and decoration plan
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="history-right">
+
+                    <div class="amount">
+                        ₹1,50,000
+                    </div>
+
+                    <div class="date">
+                        Recent
+                    </div>
+
+                    <span class="status">
+                        Completed
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PARTY -->
+
+            <div class="history-item">
+
+                <div class="history-left">
+
+                    <div class="history-icon">
+                        🎉
+                    </div>
+
+                    <div class="history-info">
+
+                        <h3>
+                            Party Budget Planner
+                        </h3>
+
+                        <p>
+                            Event planning and celebration budget
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="history-right">
+
+                    <div class="amount">
+                        ₹75,000
+                    </div>
+
+                    <div class="date">
+                        Previous Plan
+                    </div>
+
+                    <span class="status">
+                        Completed
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- JEWELLERY -->
+
+            <div class="history-item">
+
+                <div class="history-left">
+
+                    <div class="history-icon">
+                        💎
+                    </div>
+
+                    <div class="history-info">
+
+                        <h3>
+                            Jewellery Budget Planner
+                        </h3>
+
+                        <p>
+                            Wedding jewellery planning
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="history-right">
+
+                    <div class="amount">
+                        ₹1,00,000
+                    </div>
+
+                    <div class="date">
+                        Previous Plan
+                    </div>
+
+                    <span class="status">
+                        Completed
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
